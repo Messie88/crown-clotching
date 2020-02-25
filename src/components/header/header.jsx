@@ -5,7 +5,7 @@ import { auth } from "../../firebase/firebase.utilities";
 // To use our reducers
 import {connect} from 'react-redux';
 
-import CartIcon from "../cart-icon/card-icon";
+import CartIcon from "../cart-icon/cart-icon";
 import CartDropdown from "../cart-dropdown/cart-dropdown";
 
 import "./header.scss";
