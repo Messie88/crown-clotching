@@ -5,9 +5,12 @@ import { auth } from "../../firebase/firebase.utilities";
 // To use our reducers
 import {connect} from 'react-redux';
 
+import CartIcon from "../cart-icon/card-icon";
+import CartDropdown from "../cart-dropdown/cart-dropdown";
+
 import "./header.scss";
 
-const Header = ({currentUser}) => (
+const Header = ({currentUser, hidden}) => (
     <div className="header">
         <Link className='logo-container' to='/'>
           <Logo className='logo' />
@@ -21,7 +24,9 @@ const Header = ({currentUser}) => (
                 : 
                 <Link className='option' to='/signin'>SIGN IN</Link>
             }
+            <CartIcon />
         </div>
+        { hidden ? null : <CartDropdown /> }
     </div>
 )
 
@@ -30,15 +35,9 @@ const Header = ({currentUser}) => (
 with redux codebases. This is a function that allows us to access
 the states, with the state beig our root reducer. the state here
 is the root state */
-const mapStateToProps = (state) => ({
-    /*
-    state = root reducer,
-    user = user value of our root reducer, which will give us our
-    userReducer and from there we want,
-    currentUser = current user state from our userReducer
-
-     */
-    currentUser: state.user.currentUser
+const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
+    currentUser,
+    hidden
 });
 
 /* now we get the value of our state and, remove the passing of
