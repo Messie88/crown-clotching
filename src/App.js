@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import { auth, CreateUserProfileDocument } from "./firebase/firebase.utilities";
 import {connect} from 'react-redux';
+import { createStructuredSelector } from "reselect";
 
 import './App.css';
 
@@ -9,8 +10,11 @@ import Header from "./components/header/header";
 import Homepage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop'
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up";
+import CheckoutPage from "./pages/checkout/checkout";
 
 import { setCurrentUser } from "./redux/user/user.action";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+
 class App extends React.Component {
   
   /* onAuthStateChange is an observer(listener) and it return 
@@ -64,6 +68,7 @@ class App extends React.Component {
       <Switch>
         <Route exact path='/' component={Homepage} />
         <Route path='/shop' component={ShopPage} />
+        <Route exact path='/checkout' component={CheckoutPage} />
         <Route exact path='/signin' 
           render={
           () => this.props.currentUser ? 
@@ -78,9 +83,13 @@ class App extends React.Component {
   }
 }
 // REDUX
-/* The state here is only useful for our Redirect */
+/* The state here is only useful for our Redirect 
 const mapStateToProps = ({user}) => ({
   currentUser: user.currentUser
+})
+*/
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 /* 
