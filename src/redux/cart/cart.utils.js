@@ -15,4 +15,5 @@ organize functions that wwe may need in multiple files in one
                 )
          }
          return [...cartItems, {...cartItemToAdd, quantity: 1}]
- }
+ } 
+ 

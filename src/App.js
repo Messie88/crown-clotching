@@ -66,7 +66,8 @@ class App extends React.Component {
         <Route path='/shop' component={ShopPage} />
         <Route exact path='/signin' 
           render={
-          () => this.props.currentUser ? (<Redirect to='/' />)
+          () => this.props.currentUser ? 
+          (<Redirect to='/' />)
           :
           (<SignInAndSignUpPage />)
           } 
@@ -77,10 +78,17 @@ class App extends React.Component {
   }
 }
 // REDUX
+/* The state here is only useful for our Redirect */
 const mapStateToProps = ({user}) => ({
   currentUser: user.currentUser
 })
 
+/* 
+What dispatch is, it is a way for Redux to know whatever
+object you're passing to it is going to be an action object 
+that we're goind to pass to every reducer. So our user action
+(setCurrentUser) is a function that gets the user but returns an action object 
+*/
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
