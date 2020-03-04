@@ -28,4 +28,19 @@
     margin-left: auto;
     font-size: 36px;
   }
+  .test-warning {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 24px;
+    color: red;
+  }
+  button {
+    font-size: 20px;
+    background: #4285f4;
+
+    &:hover {
+      background-color: #2674f1;
+      border: none;
+    }
+  }
 }
