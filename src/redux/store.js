@@ -10,7 +10,7 @@ const middlewares = [];
 
 /* e need the logger middleware only in developement. Not in
 production(deploy) or test */
-if(process.env.NODE_ENV === 'developement') {
+if(process.env.NODE_ENV === 'development') {
     middlewares.push(logger);
 }
 

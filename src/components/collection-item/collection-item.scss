@@ -19,11 +19,11 @@
     margin-bottom: 5px;
   }
   
-  .custom-button {
-    width: 80%;
+  button {
+    width: 40%;
     opacity: .7;
     position: absolute;
-    top: 255px;
+    top: 225px;
     display: none;
   }
 
@@ -32,8 +32,8 @@
       opacity: .8;
     }
 
-    .custom-button {
-      opacity: .85;
+    button {
+      opacity: 1;
       display: flex;
     }
   }
@@ -46,12 +46,13 @@
     font-size: 18px;
 
     .name {
-      width: 90%;
+      width: 80%;
       margin-bottom: 15px;
     }
 
     .price {
-      width: 10%;
+      width: 20%;
+      text-align: end
     }
   }
 }

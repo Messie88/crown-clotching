@@ -23,9 +23,9 @@ export const selectCollections = createSelector(
 export const selectCollectionsForPreview = createSelector(
     [selectCollections],
     //Object.keys() transform our object to an array
-    collections => Object.keys(collections).map(key =>
+    collections => collections ?  Object.keys(collections).map(key =>
         collections[key]
-    )
+    ) : []
 );
 
 /* We match over the collections by selecting it and passing 
@@ -38,7 +38,7 @@ find collection.id match the url param of collection id map
 export const selectCollection = collectionUrlParam =>
 createSelector(
     [selectCollections],
-    collections => collections[collectionUrlParam]
+    collections => (collections ? collections[collectionUrlParam] : null)
     /* the .find way, assuming our shop.data file is an array not an object, as in this case
     collections => collections.find(
      collection => collection.id === COLLECTION_ID_MAP[collectionUrlParam])*/

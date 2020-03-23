@@ -14,7 +14,6 @@ import CheckoutPage from "./pages/checkout/checkout";
 
 import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selectors";
-
 class App extends React.Component {
   
   /* onAuthStateChange is an observer(listener) and it return 
@@ -33,7 +32,7 @@ class App extends React.Component {
   says the auth status change, the user has updated or sign out
    */
   componentDidMount() {
-    const {setCurrentUser} = this.props;
+    const { setCurrentUser } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
      //DATA PERSISTENCE. if the user sign in
       if(userAuth) {
@@ -52,7 +51,7 @@ class App extends React.Component {
            });
        });
      } else {
-         setCurrentUser( userAuth );
+         setCurrentUser( userAuth );    
      }
     });
   }

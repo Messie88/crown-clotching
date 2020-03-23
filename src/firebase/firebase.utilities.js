@@ -52,6 +52,63 @@ export const CreateUserProfileDocument = async(userAuth, additionalData) => {
    return userRef;
 };
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = firestore.collection(collectionKey);
+    
+    /* The thing about firebase is that, we can only make one set
+    call at the time. The thing to consider is that, bcoz each call
+    is individual, they fire one at a time. If our internet connection
+    stops halways through, we'll have saved only half of those 
+    documents bcoz the other half ould not have made it to the 
+    server. Now this is bad bcoz our code becomes unpredictable.
+    We want to know that if we hit our function and all of our
+    requests send, all of them should set. inf any of them fail
+    we want the whole thing to fail bcoz then we anticipate that, 
+    Our code is consistent. So to do that, we have to do what's 
+    called a BATCH RIGHT.
+    A BATCH RIGHT is essentially just a way to batch or to group
+    all our calls together into one big request.
+    Firestore gives us a batch object, with which we just add all
+    of 4 e.g sets into it and then we fired off whenever we're adding
+    all the calls we want to it */
+    const batch = firestore.batch();
+    objectsToAdd.forEach(obj => {
+        /* The code above says to firebase to gives us a new documentRef
+        in this collection and randomly generate an id for it */
+        const newDocRef = collectionRef.doc();
+
+        batch.set(newDocRef, obj);
+    });
+
+    /* .commit() will fire off our batch request. It returns back
+    a promsise. When commit succeeds, it will come back and resolve
+    a void value, meaning a null value. And that's useful for us
+    bcoz if we call the addCollectionAndDocuments function somewhere,
+    we can chain off this function and then cal .then() and do something
+    if the call succeed or we can handle the errors as well. */
+    return await batch.commit()
+}
+
+export const convertCollectionsSnapshotToMap = collections => {
+    const transformedCollection = collections.docs.map(docSnapshot => {
+        const { title, items } = docSnapshot.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: docSnapshot.id,
+            title,
+            items
+        }
+    });
+    
+    /* The empty object we pass to our reduce function is our
+    initial accumulator */
+    return transformedCollection.reduce((accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;
+        return accumulator;
+    }, {})
+}
+
 firebase.initializeApp(config);
 //To access firebase auth
 export const auth = firebase.auth();

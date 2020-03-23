@@ -1,5 +1,5 @@
 /* Utility function allow us to keep our files clean and 
-organize functions that wwe may need in multiple files in one
+organize functions that we may need in multiple files in one
  location */
 
  export const addItemToCart = (cartItems, cartItemToAdd) => {
