@@ -42,4 +42,15 @@ createSelector(
     /* the .find way, assuming our shop.data file is an array not an object, as in this case
     collections => collections.find(
      collection => collection.id === COLLECTION_ID_MAP[collectionUrlParam])*/
+);
+
+export const selectIsCollectionFetching = createSelector(
+    [selectShop],
+    shop => shop.isFetching
+);
+
+export const selectIsCollectionsLoaded = createSelector(
+    [selectShop],
+    // !! transform a value in a boolean
+    shop => !!shop.collections
 )

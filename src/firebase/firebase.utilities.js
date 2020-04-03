@@ -106,8 +106,18 @@ export const convertCollectionsSnapshotToMap = collections => {
     return transformedCollection.reduce((accumulator, collection) => {
         accumulator[collection.title.toLowerCase()] = collection;
         return accumulator;
-    }, {})
-}
+    }, {});
+};
+
+// For our saga persistence
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            unsubscribe();
+            resolve(userAuth);
+        }, reject);
+    });
+};
 
 firebase.initializeApp(config);
 //To access firebase auth
@@ -116,14 +126,14 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 ///////////// SETUP OF GOOGLE AUTHENTICATION UTILITIES. START
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 // To always trigger the Google pop-up
-provider.setCustomParameters({prompt: 'select_account'});
+googleProvider.setCustomParameters({prompt: 'select_account'});
 /* Signin google method. signInWithPopup takes the provider
 class that me made, but it takes it for many different types
 of popups. Here we just want the Google one. There's a twitter
 one and all kinds available to us in our sign*/
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 ///////////// SETUP OF GOOGLE AUTHENTICATION UTILITIES. END
 
 //In case we want the whole library

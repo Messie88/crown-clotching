@@ -1,27 +1,34 @@
-import { UserActionTypes } from "./user.type";
+import UserActionTypes from "./user.type";
 
 // Istantiate state
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: null,
+    error: null
+    
 }
 
-/* 
-    state = INITIAL_STATE means, if the state is undefined(if
-    it's not set), then useReducer will fall back and leverage
-    this INITIAL_SATE VALUE we passed him
-*/
-
 const userReducer = (state = INITIAL_STATE, action) => {
-    /* action has 2 params: type and payload. action here is 
-    what we def in user.action.js file */
     switch (action.type) {
-        case UserActionTypes.SET_CURRENT_USER:
-            
+        case UserActionTypes.SIGN_IN_SUCCESS:
+        case UserActionTypes.SIGN_UP_SUCCESS:
             return  {
                 ...state,
-                currentUser: action.payload
+                currentUser: action.payload,
+                error: null
             };
-    
+        case UserActionTypes.SIGN_OUT_SUCCESS:
+            return {
+                ...state,
+                currentUser: null,
+                error: null
+            }
+        case UserActionTypes.SIGN_IN_FAILURE:
+        case UserActionTypes.SIGN_OUT_FAILURE:
+        case UserActionTypes.SIGN_UP_FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return state;
     }
