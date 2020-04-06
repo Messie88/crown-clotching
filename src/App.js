@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { createStructuredSelector } from "reselect";
@@ -14,21 +14,12 @@ import CheckoutPage from "./pages/checkout/checkout";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import { checkUserSession } from "./redux/user/user.action";
 
-class App extends React.Component {
-  unsubscribeFromAuth = null;
+const App = ({ checkUserSession, currentUser }) => {
 
-  componentDidMount() {
-    const { checkUserSession } = this.props;
-    checkUserSession();
-  }
+  useEffect(() => {
+    checkUserSession()
+  }, [checkUserSession]);
 
-  //This will close subscription
-  componentWillUnmount(){
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    const {currentUser} = this.props
     return (
     <div>
       <Header />
@@ -47,7 +38,7 @@ class App extends React.Component {
       </Switch>
     </div>
   );
-  }
+  
 }
 // REDUX
 /* The state here is only useful for our Redirect 
